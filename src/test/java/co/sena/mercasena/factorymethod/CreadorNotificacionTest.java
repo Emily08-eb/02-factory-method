@@ -40,4 +40,13 @@ class CreadorNotificacionTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new CreadorEmail().notificar("ana@sena", "Hola"));
     }
+
+    @Test
+    void smsLargoNoSupera160Caracteres() {
+        String mensaje = "a".repeat(200);
+        ResultadoEnvio r = new NotificacionSms().enviar("3001234567", mensaje);
+
+        assertEquals(160, r.texto().length());
+        assertTrue(r.texto().endsWith("..."));
+    }
 }
