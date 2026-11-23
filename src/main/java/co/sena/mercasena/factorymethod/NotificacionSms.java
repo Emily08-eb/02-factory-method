@@ -16,9 +16,15 @@ public class NotificacionSms implements Notificacion {
             throw new IllegalArgumentException("Celular inválido: " + destino);
         }
 
-        String texto = mensaje.length() > LIMITE
-                ? mensaje.substring(0, LIMITE - SUFIJO.length()) + SUFIJO
-                : mensaje;
+        if (mensaje == null || mensaje.isBlank()) {
+            throw new IllegalArgumentException("El mensaje no puede estar vacío");
+        }
+
+        String mensajeLimpio = mensaje.trim();
+
+        String texto = mensajeLimpio.length() > LIMITE
+                ? mensajeLimpio.substring(0, LIMITE - SUFIJO.length()) + SUFIJO
+                : mensajeLimpio;
 
         return new ResultadoEnvio(canal(), destino, texto);
     }
