@@ -4,6 +4,6 @@ public class CreadorSms extends CreadorNotificacion {
 
     @Override
     protected Notificacion crearNotificacion() {
-        return new NotificacionEmail();
+        return new NotificacionSms();
     }
 }
