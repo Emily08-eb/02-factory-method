@@ -15,9 +15,11 @@ public class NotificacionSms implements Notificacion {
         if (destino == null || !destino.matches("^3\\d{9}$")) {
             throw new IllegalArgumentException("Celular inválido: " + destino);
         }
+
         String texto = mensaje.length() > LIMITE
-                ? mensaje.substring(0, LIMITE) + SUFIJO
+                ? mensaje.substring(0, LIMITE - SUFIJO.length()) + SUFIJO
                 : mensaje;
+
         return new ResultadoEnvio(canal(), destino, texto);
     }
 }
