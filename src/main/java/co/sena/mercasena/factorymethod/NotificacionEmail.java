@@ -9,7 +9,7 @@ public class NotificacionEmail implements Notificacion {
 
     @Override
     public ResultadoEnvio enviar(String destino, String mensaje) {
-        if (destino == null || !destino.contains("@")) {
+        if (destino == null || !destino.matches("^[A-Za-z0-9._+-]+@[^\\s@]+\\.[^\\s@]+$")) {
             throw new IllegalArgumentException("Correo inválido: " + destino);
         }
         return new ResultadoEnvio(canal(), destino, mensaje);
