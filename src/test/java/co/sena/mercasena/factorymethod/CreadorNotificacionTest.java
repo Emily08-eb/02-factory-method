@@ -34,4 +34,10 @@ class CreadorNotificacionTest {
     void celularInvalido() {
         assertThrows(IllegalArgumentException.class, () -> new CreadorSms().notificar("12345", "Hola"));
     }
+
+    @Test
+    void correoSinPuntoEnDominioEsInvalido() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new CreadorEmail().notificar("ana@sena", "Hola"));
+    }
 }
