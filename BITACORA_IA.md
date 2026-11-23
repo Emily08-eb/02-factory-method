@@ -1,59 +1,115 @@
 # Bitácora de uso de IA — Patrón Factory Method
 
 
-Aprendices: Emily Echeverry Buitrago / ______________________
-Ficha: 3409871  Fecha de inicio: 23/11/2026
+Aprendiz: Emily Echeverry Buitrago
+Ficha: 3409871
+Segundo aprendiz: __________________________
 
-La bitácora es evidencia del ítem 18 de la lista de chequeo. Regístralo todo, también las respuestas de la IA que estaban mal.
-Nunca pegues en una IA contraseñas, tokens, datos personales reales ni código que no tengas permiso de compartir.
+⸻
 
-1. Predicción sin IA (máx. 20 minutos)
+1. Predicción inicial de errores (sin utilizar IA)
 
-Antes de abrir cualquier IA, lee el README y el código. Escribe aquí qué errores crees que hay y por qué.
+Antes de consultar herramientas de inteligencia artificial, revisé el código y las reglas del proyecto.
 
-#	Archivo y línea	¿Qué creo que está mal?	¿Qué regla de negocio rompe?
-1	CreadorSms.java	El método crearNotificacion() devuelve una notificación de correo en lugar de una de SMS.	El creador de SMS debe crear notificaciones SMS.
-2	NotificacionEmail.java	La validación del correo solamente comprueba que no sea null y que contenga un arroba (@).	Los correos deben tener exactamente un @, una parte local válida y un dominio con al menos un punto.
-3	NotificacionSms.java	El mensaje se recorta a 160 caracteres y después se agregan tres puntos, superando el límite permitido.	Los SMS no pueden superar 160 caracteres y deben conservar 157 caracteres antes de agregar “…”.
+Identifiqué los siguientes posibles errores:
 
-2. Registro de interacciones con IA
+1. El creador de SMS podría estar generando una notificación de correo electrónico en lugar de una notificación SMS.
+2. La validación del correo electrónico podría permitir direcciones sin un punto en el dominio.
+3. El límite de caracteres de los mensajes SMS podría no cumplir la regla de los 160 caracteres, incluyendo los tres puntos finales cuando el mensaje es demasiado largo.
 
-Copia una fila por cada consulta importante.
+⸻
 
-#	Herramienta (ChatGPT / Gemini / DeepSeek / Copilot / otra)	Prompt (resumen o enlace)	¿Qué respondió?	¿Era correcto? ¿Cómo lo verifiqué?	¿Lo usé? (sí / no / modificado)
-1	ChatGPT	Análisis de los tres posibles errores del patrón Factory Method.	Identificó los tres errores y explicó las pruebas y correcciones necesarias.	Sí. Se verificó mediante pruebas unitarias.	Modificado
-2	Gemini	Se envió el mismo prompt utilizado en ChatGPT.	Identificó los tres errores, pero propuso utilizar el carácter de elipsis (…), que no corresponde a los tres puntos literales exigidos.	Parcialmente correcto. Se comparó con la regla de 157 caracteres más “…”.	No
-3	DeepSeek	Se envió el mismo prompt utilizado en las otras herramientas.	Identificó los tres errores, pero también utilizó el carácter de elipsis (…) en lugar de tres puntos.	Parcialmente correcto. Se verificó que el resultado debía tener 160 caracteres.	No
+2. Consulta a las herramientas de inteligencia artificial
 
-3. Jurado de IAs
+Consulté las mismas instrucciones del proyecto con ChatGPT, Gemini y DeepSeek para comparar sus respuestas.
 
-Envía el mismo prompt a tres herramientas distintas y compara.
+Herramienta	Resultado de la consulta
+ChatGPT	Identificó los tres errores relacionados con el creador SMS, la validación del correo y el límite de caracteres.
+Gemini	Identificó los errores principales, pero sugirió utilizar un carácter de puntos suspensivos diferente.
+DeepSeek	Coincidió con los errores principales y también sugirió utilizar un carácter de puntos suspensivos diferente.
 
-Pregunta enviada	ChatGPT	Gemini	DeepSeek	¿Quién acertó? ¿En qué discreparon?
-Análisis de los tres errores del proyecto Factory Method, indicando cuáles son reales, cómo demostrarlos con pruebas y cómo corregirlos.	Identificó correctamente los tres errores y explicó que el SMS debe conservar 157 caracteres y agregar tres puntos.	Identificó los tres errores, pero confundió los tres puntos con un carácter de elipsis.	Identificó los tres errores, pero también confundió los tres puntos con un carácter de elipsis.	Las tres herramientas identificaron los problemas principales. ChatGPT explicó correctamente el límite de 160 caracteres. Gemini y DeepSeek se equivocaron en el sufijo del SMS.
+⸻
 
-4. Errores encontrados y corregidos
+3. Comparación y análisis de las respuestas
 
-#	Error	Prueba que lo demuestra (nombre del método de prueba)	Commit de la corrección	¿Lo encontré yo, la IA o ambos?
-1	CreadorSms devuelve NotificacionEmail en lugar de NotificacionSms.	creadorSmsEnviaPorSms	a4cb9fc	Ambos
-2	NotificacionEmail acepta correos sin punto en el dominio.	correoSinPuntoEnDominioEsInvalido	3795fee	Ambos
-3	NotificacionSms supera los 160 caracteres al agregar el sufijo.	smsLargoNoSupera160Caracteres	6d688e2	Ambos
+Las tres herramientas coincidieron en los problemas principales del proyecto.
 
-5. Lo que la IA hizo mal o no vio
+Sin embargo, encontré una diferencia en la forma de representar los puntos suspensivos del mensaje SMS.
 
-Durante la comparación de las herramientas se encontró un error en las respuestas de Gemini y DeepSeek. Ambas recomendaron utilizar el carácter de elipsis (…) en lugar de tres puntos consecutivos (…).
+El README exige utilizar tres puntos consecutivos (...), no el carácter especial de puntos suspensivos (…).
 
-La diferencia es importante porque el requisito establece conservar 157 caracteres y agregar tres puntos, para obtener exactamente 160 caracteres.
+Por eso comparé las recomendaciones con las reglas del proyecto antes de realizar los cambios.
 
-Este error se identificó al comparar las respuestas con las reglas del proyecto y con la prueba unitaria. Esto demuestra que las respuestas de la inteligencia artificial deben verificarse antes de utilizarlas.
+⸻
 
-6. Reflexión final (5 a 10 líneas)
+4. Correcciones realizadas y pruebas
+
+Realicé las correcciones de acuerdo con las reglas del README y comprobé los resultados mediante pruebas unitarias.
+
+Corrección 1: Creador SMS
+
+Se corrigió el método para que CreadorSms genere una notificación SMS y no una notificación de correo electrónico.
+
+Commit: a4cb9fc fix: corrige creador SMS
+
+Corrección 2: Validación del correo electrónico
+
+Se ajustó la expresión de validación para rechazar correos que no tengan un punto en el dominio.
+
+Commit: 3795fee fix: corrige validacion de correo
+
+Corrección 3: Límite de caracteres SMS
+
+Se corrigió el límite para que los mensajes largos tengan exactamente 160 caracteres, conservando los primeros 157 y agregando ....
+
+Commit: 6d688e2 fix: corrige limite de SMS
+
+Corrección adicional: Mensajes SMS vacíos y espacios
+
+Se agregó la validación para rechazar mensajes nulos o vacíos y eliminar los espacios al inicio y al final antes del envío.
+
+Commit: 0967be8 fix: valida mensajes SMS vacios y elimina espacios
+
+Pruebas adicionales
+
+Se agregaron pruebas para comprobar que los mensajes SMS nulos o vacíos sean rechazados y que los espacios se eliminen correctamente.
+
+Commit: ebe7552 test: agrega pruebas para mensajes SMS
+
+Refactorización
+
+Se mejoró la legibilidad de la validación del correo electrónico sin cambiar su comportamiento.
+
+Commit: ef95720 refactor: mejora legibilidad validacion correo
+
+Al ejecutar las pruebas unitarias, todas finalizaron correctamente.
+
+⸻
+
+5. Errores o diferencias encontradas en las recomendaciones de IA
+
+Durante la comparación encontré que Gemini y DeepSeek sugirieron utilizar el carácter especial … para los mensajes SMS largos.
+
+Esta recomendación no cumplía exactamente con la instrucción del README, que exige tres puntos consecutivos (...).
+
+Por esta razón, no acepté todas las recomendaciones automáticamente y comprobé que los cambios respetaran las reglas del proyecto.
+
+⸻
+
+6. Reflexión final y revisión de seguridad
 
 La inteligencia artificial me ayudó a identificar los errores y comprender cómo corregirlos.
+
 Aprendí que el patrón Factory Method permite crear diferentes tipos de notificaciones.
+
 También aprendí la importancia de realizar pruebas unitarias antes y después de corregir el código.
-Las pruebas permitieron comprobar que las tres correcciones realizadas funcionaran correctamente.
-Durante la comparación encontré que no todas las recomendaciones de las IA eran correctas.
+
+Las pruebas permitieron comprobar que las correcciones realizadas funcionaran correctamente.
+
+Durante la comparación encontré que no todas las recomendaciones de las herramientas de IA eran correctas.
+
 Por eso comparé sus respuestas con las reglas del README y los resultados de las pruebas.
-En la revisión también tuve presente la importancia de validar los datos recibidos y no compartir contraseñas ni tokens.
-Queda por comprobar el cumplimiento de la regla de mensajes nulos o vacíos y el recorte de espacios antes del envío.
+
+En la revisión de seguridad tuve presente la importancia de validar los datos recibidos, rechazar mensajes nulos o vacíos y no compartir contraseñas ni tokens.
+
+Finalmente, comprobé que los mensajes SMS eliminen los espacios al inicio y al final antes de enviarse.
