@@ -49,4 +49,23 @@ class CreadorNotificacionTest {
         assertEquals(160, r.texto().length());
         assertTrue(r.texto().endsWith("..."));
     }
+
+    @Test
+    void mensajeNuloNoSePermiteEnSms() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new NotificacionSms().enviar("3001234567", null));
+    }
+
+    @Test
+    void mensajeVacioNoSePermiteEnSms() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new NotificacionSms().enviar("3001234567", "   "));
+    }
+
+    @Test
+    void smsEliminaEspaciosDelMensaje() {
+        ResultadoEnvio r = new NotificacionSms().enviar("3001234567", "  Hola  ");
+
+        assertEquals("Hola", r.texto());
+    }
 }
